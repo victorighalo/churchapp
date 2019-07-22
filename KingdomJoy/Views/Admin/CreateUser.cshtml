@@ -1,0 +1,157 @@
+﻿@model KingdomJoy.Models.RegisterViewModel
+
+
+@{
+    ViewBag.Title = "Create User";
+}
+<div class="br-pageheader">
+    <nav class="breadcrumb pd-0 mg-0 tx-12">
+        <a class="breadcrumb-item" href="index.html">Dashboard</a>
+        <a class="breadcrumb-item" href="index.html">Users</a>
+        <span class="breadcrumb-item active">Create User</span>
+    </nav>
+</div>
+<div class="br-pagetitle">
+    <i class="icon icon ion-ios-bookmarks-outline"></i>
+    <div>
+        <h4>Create User</h4>
+       <p class="mg-b-0">Create a new Registrar</p>
+    </div>
+</div>
+
+<div class="br-pagebody">
+    <div class="br-section-wrapper">
+        <div class="form-layout form-layout-1">
+
+            @using (Html.BeginForm("CreateUser", "Admin", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <h4>Create User</h4>
+                <hr />
+             
+                if (ViewBag.status != null)
+                {
+                    <div class="alert alert-success">
+                        <h3>Success!</h3>
+                        <p>User created.</p>
+                    </div>
+                }
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <div class="row mg-b-25">
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "form-control-label" })
+
+                            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "form-control-label" })
+
+                            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Dob, htmlAttributes: new { @class = "form-control-label", @id = "date" })
+
+                            @Html.EditorFor(model => model.Dob, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Dob, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-control-label" })
+
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "form-control-label" })
+
+                            @Html.DropDownListFor(model => model.Gender, new List<SelectListItem>
+                              {
+                               new SelectListItem{ Text = "Male", Value = "1", Selected = true},
+                               new SelectListItem{ Text = "Female", Value = "0"}
+                              },
+                              htmlAttributes: new { @class = "form-control" }
+                       )
+                            @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>                    
+                    
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Roles, htmlAttributes: new { @class = "form-control-label" })
+
+                            @Html.DropDownListFor(model => model.Role, new SelectList(Model.Roles, "Id", "Name"), "Select Role",
+                              htmlAttributes: new { @class = "form-control" }
+                            )
+                            @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+                            @*<label>Roles</label>
+                            <select name="role" class="form-control">
+                                @foreach (var roleItem in Model.Roles) {
+                                <option value="@roleItem.Id">@roleItem.Name</option>
+                                }
+                            </select>*@
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "form-control-label" })
+
+                            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "form-control-label" })
+
+                            @Html.PasswordFor(model => model.Password, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "form-control-label" })
+
+                            @Html.PasswordFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-layout-footer">
+                    <input type="submit" value="Create" class="btn btn-info" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section scripts {
+    <script>
+        $("#Dob").datepicker();
+    </script>
+}

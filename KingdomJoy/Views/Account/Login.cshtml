@@ -1,0 +1,64 @@
+﻿@using KingdomJoy.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = "~/Views/Shared/_Auth.cshtml";
+}
+
+
+<div class="d-flex align-items-center justify-content-center ht-100v">
+    <img src="https://via.placeholder.com/1920x1280" class="wd-100p ht-100p object-fit-cover" alt="">
+    <div class="overlay-body bg-black-6 d-flex align-items-center justify-content-center">
+        <div class="login-wrapper wd-450 wd-xs-450 pd-25 pd-xs-40 rounded bd bd-white-2 bg-black-7">
+            <div class="signin-logo tx-center tx-28 tx-bold tx-white"><span class="tx-normal">@ViewBag.Title</span></div>
+            <div class="tx-white-5 tx-center mg-b-60">Welcome to KingdomJoy <br />Church Management System</div>
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+            
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email)
+                 
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control fc-outline-dark" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                 
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password)
+                
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control fc-outline-dark" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                 
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Log in" class="btn btn-info btn-block" />
+                    </div>
+                </div>
+                <p>
+                    @Html.ActionLink("Register as a new user", "Register")
+                </p>
+                @* Enable this once you have account confirmation enabled for password reset functionality
+                    <p>
+                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
+                    </p>*@
+            }
+        </div><!-- login-wrapper -->
+    </div><!-- overlay-body -->
+</div><!-- d-flex -->
+@*<div class="col-md-4">
+    <section id="socialLoginForm">
+        @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
+    </section>
+</div>*@
+  
+

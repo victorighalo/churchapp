@@ -1,0 +1,72 @@
+﻿@model IEnumerable<KingdomJoy.Models.UserViewModel>
+
+@{
+    ViewBag.Title = "Users";
+}
+<div class="br-pageheader">
+    <nav class="breadcrumb pd-0 mg-0 tx-12">
+        @Html.ActionLink("Dashboard", "Index", "Home", null, new { @class = "breadcrumb-item" })
+        <span class="breadcrumb-item active">Users</span>
+    </nav>
+</div>
+<div class="br-pagetitle">
+    <i class="icon icon ion-ios-bookmarks-outline"></i>
+    <div>
+        <h4>Users</h4>
+        <p class="mg-b-0">Registered Users data.</p>
+    </div>
+</div>
+<div class="br-pagebody">
+    <div class="br-section-wrapper">
+        @Html.ActionLink("New user", "CreateUser", "Admin", null, new { @class = "btn btn-primary" })
+        <br />
+        <br />
+        <table class="table table-bordered table-primary">
+            <thead class="thead-colored thead-primary">
+                <tr>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+
+                            @item.FirstName
+                        </td>
+                        <td>
+                            @item.LastName
+                        </td>
+                        <td>
+                            @item.Email
+                        </td>
+                        <td>
+                            @item.Role
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <a href="" class="tx-gray-800 d-inline-block" data-toggle="dropdown">
+                                    Actions  <i class="fa fa-angle-down mg-l-10"></i>
+                                </a>
+                                <div class="dropdown-menu pd-10 wd-50">
+                                    <nav class="nav nav-style-1 flex-column">
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id, @class = "nav-link" })
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.Id, @class = "nav-link" })
+                                    </nav>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
