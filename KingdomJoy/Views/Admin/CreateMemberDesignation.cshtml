@@ -1,0 +1,50 @@
+﻿@model KingdomJoy.Models.Designation
+@{ViewBag.Title = "Create Member Designation";}
+<div class="br-pageheader">
+    <nav class="breadcrumb pd-0 mg-0 tx-12">
+        @Html.ActionLink("Dashboard", "Index", "Home", null, new { @class = "breadcrumb-item" })
+        <span class="breadcrumb-item active">Create Member Designation</span>
+    </nav>
+</div>
+<div class="br-pagetitle">
+    <i class="icon icon ion-ios-bookmarks-outline"></i>
+    <div>
+        <h4>Create Member Designation</h4>
+        <p class="mg-b-0">Create a new Member Designation</p>
+    </div>
+</div>
+
+<div class="br-pagebody">
+    <div class="br-section-wrapper">
+        <div class="form-layout form-layout-1">
+            @using (Html.BeginForm("CreateMemberDesignation", "Admin"))
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="row mg-b-25">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+
+                            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input type="submit" value="Create" class="btn btn-default" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+

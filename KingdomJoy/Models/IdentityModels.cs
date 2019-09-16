@@ -28,6 +28,11 @@ namespace KingdomJoy.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<MemberTitle> MemberTitles { get; set; }
+        public DbSet<Member> Members { get; set; }
+        public DbSet<Gender> Genders { get; set; }
+        public DbSet<Designation> Designations { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

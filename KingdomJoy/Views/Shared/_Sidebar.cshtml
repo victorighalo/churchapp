@@ -6,15 +6,48 @@
         <li class="br-menu-item">
             <a href="#" class="br-menu-link with-sub">
                 <i class="menu-item-icon icon ion-ios-list-outline tx-22"></i>
+                <span class="menu-item-label">Members</span>
+            </a><!-- br-menu-link -->
+            <ul class="br-menu-sub">
+                <li class="sub-item">
+                    <a href="/registrar/members/create" class="sub-link">New member</a>
+                    </li>      
+                <li class="sub-item">
+                    <a href="/registrar/members/" class="sub-link">Members</a>
+                </li>
+            </ul>
+        </li>  
+        
+        <li class="br-menu-item">
+            <a href="#" class="br-menu-link with-sub">
+                <i class="menu-item-icon icon ion-ios-list-outline tx-22"></i>
                 <span class="menu-item-label">Account</span>
             </a><!-- br-menu-link -->
             <ul class="br-menu-sub">
                 <li class="sub-item">
-                @Html.ActionLink("New user", "CreateUser", "Admin", null, new { @class = "sub-link" })
+                    <a href="/admin/createuser" class="sub-link">New User</a>
+                    @*@Html.ActionLink("New user", "CreateUser", "Admin", null, new { @class = "sub-link" })*@
                 </li>      
                 <li class="sub-item">
-                @Html.ActionLink("Users", "Users", "Admin", null, new { @class = "sub-link" })
+                    <a href="/admin/users" class="sub-link">All Users</a>
+                    @*@Html.ActionLink("Users", "Users", "Admin", null, new { @class = "sub-link" })*@
                 </li>
+            </ul>
+        </li><!-- br-menu-item -->        
+    <li class="br-menu-item">
+            <a href="#" class="br-menu-link with-sub">
+                <i class="menu-item-icon icon ion-ios-list-outline tx-22"></i>
+                <span class="menu-item-label">Settings</span>
+            </a><!-- br-menu-link -->
+            <ul class="br-menu-sub">
+                <li class="sub-item">
+                    <a href="/admin/membertitles" class="sub-link">New member</a>
+                    @*@Html.ActionLink("Member Titles", "MemberTitles", "Admin", null, new { @class = "sub-link", area = "" })*@
+                </li>             
+               <li class="sub-item">
+                   <a href="/admin/memberdesignations" class="sub-link">Member Designation</a>
+                  </li>      
+         
             </ul>
         </li><!-- br-menu-item -->
     </ul><!-- br-sideleft-menu -->

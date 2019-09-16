@@ -5,11 +5,11 @@
     ViewBag.Title = "Create User";
 }
 <div class="br-pageheader">
-    <nav class="breadcrumb pd-0 mg-0 tx-12">
-        <a class="breadcrumb-item" href="index.html">Dashboard</a>
-        <a class="breadcrumb-item" href="index.html">Users</a>
-        <span class="breadcrumb-item active">Create User</span>
-    </nav>
+        <nav class="breadcrumb pd-0 mg-0 tx-12">
+            @Html.ActionLink("Dashboard", "Index", "Home", null, new { @class = "breadcrumb-item" })
+            @Html.ActionLink("Users", "Admin", "Home", null, new { @class = "breadcrumb-item" })
+            <span class="breadcrumb-item active">Create User</span>
+        </nav>
 </div>
 <div class="br-pagetitle">
     <i class="icon icon ion-ios-bookmarks-outline"></i>

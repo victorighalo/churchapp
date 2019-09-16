@@ -45,16 +45,34 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=8.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.8.1.1\lib\net461\AutoMapper.dll</HintPath>
+    </Reference>
+    <Reference Include="JQDT, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\jQDataTables.ServerSide.WebApi.1.1.2\lib\JQDTServerSide\WebAPI\JQDT.dll</HintPath>
+    </Reference>
+    <Reference Include="JQDT.WebAPI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\jQDataTables.ServerSide.WebApi.1.1.2\lib\JQDTServerSide\WebAPI\JQDT.WebAPI.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.4\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.4\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.4\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
@@ -165,16 +183,25 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\MappingProfile.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Areas\Registrar\Controllers\MembersController.cs" />
+    <Compile Include="Areas\Registrar\Controllers\RegistrarController.cs" />
+    <Compile Include="Areas\Registrar\RegistrarAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\Api\AttendanceController.cs" />
+    <Compile Include="Controllers\Api\MembersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Dtos\MemberDto.cs" />
     <Compile Include="Extensions\IdentityExtensions.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Helpers.cs" />
     <Compile Include="Migrations\201907120520023_initialmodels.cs" />
     <Compile Include="Migrations\201907120520023_initialmodels.Designer.cs">
       <DependentUpon>201907120520023_initialmodels.cs</DependentUpon>
@@ -183,10 +210,31 @@
     <Compile Include="Migrations\201907131310325_Updated Users table.Designer.cs">
       <DependentUpon>201907131310325_Updated Users table.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201907230004471_member-data.cs" />
+    <Compile Include="Migrations\201907230004471_member-data.Designer.cs">
+      <DependentUpon>201907230004471_member-data.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201907281724316_updated members entity.cs" />
+    <Compile Include="Migrations\201907281724316_updated members entity.Designer.cs">
+      <DependentUpon>201907281724316_updated members entity.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908120823034_Added designation nav property to members model.cs" />
+    <Compile Include="Migrations\201908120823034_Added designation nav property to members model.Designer.cs">
+      <DependentUpon>201908120823034_Added designation nav property to members model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908121154042_removed designation property to members model.cs" />
+    <Compile Include="Migrations\201908121154042_removed designation property to members model.Designer.cs">
+      <DependentUpon>201908121154042_removed designation property to members model.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201908121156285_removed designation property to members model2.cs" />
+    <Compile Include="Migrations\201908121156285_removed designation property to members model2.Designer.cs">
+      <DependentUpon>201908121156285_removed designation property to members model2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\MembersViewModel.cs" />
     <Compile Include="Models\UserEditViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -198,15 +246,66 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bracket.min.css" />
+    <Content Include="Content\dataTables.bootstrap.min.css" />
+    <Content Include="Content\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\jquery.dataTables.min.css" />
+    <Content Include="Content\responsive.dataTables.min.css" />
+    <Content Include="Content\select2.min.css" />
+    <Content Include="Content\toastr.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\angular.min.js" />
+    <Content Include="Scripts\axios.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Areas\Registrar\Views\web.config" />
+    <Content Include="Areas\Registrar\Views\Shared\Shared\_Auth.cshtml" />
+    <Content Include="Areas\Registrar\Views\Shared\Shared\_Footer.cshtml" />
+    <Content Include="Areas\Registrar\Views\Shared\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Registrar\Views\Shared\Shared\_LoginPartial.cshtml" />
+    <Content Include="Areas\Registrar\Views\Shared\Shared\_Main.cshtml" />
+    <Content Include="Areas\Registrar\Views\Shared\Shared\_Rightbar.cshtml" />
+    <Content Include="Areas\Registrar\Views\Shared\Shared\_Sidebar.cshtml" />
+    <Content Include="Areas\Registrar\Views\Shared\Shared\_Topbar.cshtml" />
+    <Content Include="Areas\Registrar\Views\Shared\Shared\Error.cshtml" />
+    <Content Include="Areas\Registrar\Views\Shared\Shared\Lockout.cshtml" />
+    <Content Include="Areas\Registrar\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Registrar\Views\Registrar\Index.cshtml" />
+    <Content Include="Areas\Registrar\Views\Members\Index.cshtml" />
+    <Content Include="Areas\Registrar\Views\Members\Create.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\bracket.js" />
     <Content Include="Scripts\dashboard.js" />
+    <Content Include="Scripts\datatables\angular-datatables.js" />
+    <Content Include="Scripts\datatables\angular-datatables.min.js" />
+    <Content Include="Scripts\datatables\css\angular-datatables.css" />
+    <Content Include="Scripts\datatables\css\angular-datatables.min.css" />
+    <Content Include="Scripts\datatables\jquery.dataTables.js" />
+    <Content Include="Scripts\datatables\plugins\bootstrap\angular-datatables.bootstrap.js" />
+    <Content Include="Scripts\datatables\plugins\bootstrap\angular-datatables.bootstrap.min.js" />
+    <Content Include="Scripts\datatables\plugins\bootstrap\datatables.bootstrap.min.css" />
+    <Content Include="Scripts\datatables\plugins\buttons\angular-datatables.buttons.js" />
+    <Content Include="Scripts\datatables\plugins\buttons\angular-datatables.buttons.min.js" />
+    <Content Include="Scripts\datatables\plugins\colreorder\angular-datatables.colreorder.js" />
+    <Content Include="Scripts\datatables\plugins\colreorder\angular-datatables.colreorder.min.js" />
+    <Content Include="Scripts\datatables\plugins\columnfilter\angular-datatables.columnfilter.js" />
+    <Content Include="Scripts\datatables\plugins\columnfilter\angular-datatables.columnfilter.min.js" />
+    <Content Include="Scripts\datatables\plugins\colvis\angular-datatables.colvis.js" />
+    <Content Include="Scripts\datatables\plugins\colvis\angular-datatables.colvis.min.js" />
+    <Content Include="Scripts\datatables\plugins\fixedcolumns\angular-datatables.fixedcolumns.js" />
+    <Content Include="Scripts\datatables\plugins\fixedcolumns\angular-datatables.fixedcolumns.min.js" />
+    <Content Include="Scripts\datatables\plugins\fixedheader\angular-datatables.fixedheader.js" />
+    <Content Include="Scripts\datatables\plugins\fixedheader\angular-datatables.fixedheader.min.js" />
+    <Content Include="Scripts\datatables\plugins\light-columnfilter\angular-datatables.light-columnfilter.js" />
+    <Content Include="Scripts\datatables\plugins\light-columnfilter\angular-datatables.light-columnfilter.min.js" />
+    <Content Include="Scripts\datatables\plugins\scroller\angular-datatables.scroller.js" />
+    <Content Include="Scripts\datatables\plugins\scroller\angular-datatables.scroller.min.js" />
+    <Content Include="Scripts\datatables\plugins\select\angular-datatables.select.js" />
+    <Content Include="Scripts\datatables\plugins\select\angular-datatables.select.min.js" />
+    <Content Include="Scripts\datatables\plugins\tabletools\angular-datatables.tabletools.js" />
+    <Content Include="Scripts\datatables\plugins\tabletools\angular-datatables.tabletools.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
@@ -3034,7 +3133,13 @@
     <Content Include="lib\select2\js\select2.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\ResizeSensor.js" />
-    <Content Include="Web.config" />
+    <Content Include="Scripts\select2.min.js" />
+    <Content Include="Scripts\sweetalert2%408.js" />
+    <Content Include="Scripts\toastr.min.js" />
+    <Content Include="Scripts\vue.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -3136,9 +3241,14 @@
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Shared\_Auth.cshtml" />
+    <Content Include="Views\Admin\MemberTitles.cshtml" />
+    <Content Include="Views\Admin\EditTitle.cshtml" />
+    <Content Include="Views\Admin\MemberDesignations.cshtml" />
+    <Content Include="Views\Admin\CreateMemberDesignation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Registrar\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -3159,6 +3269,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907131310325_Updated Users table.resx">
       <DependentUpon>201907131310325_Updated Users table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907230004471_member-data.resx">
+      <DependentUpon>201907230004471_member-data.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201907281724316_updated members entity.resx">
+      <DependentUpon>201907281724316_updated members entity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908120823034_Added designation nav property to members model.resx">
+      <DependentUpon>201908120823034_Added designation nav property to members model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908121154042_removed designation property to members model.resx">
+      <DependentUpon>201908121154042_removed designation property to members model.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908121156285_removed designation property to members model2.resx">
+      <DependentUpon>201908121156285_removed designation property to members model2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

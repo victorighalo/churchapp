@@ -1,0 +1,343 @@
+﻿@{
+    @model KingdomJoy.Models.MembersViewModel
+    ViewBag.Title = "Create Member";
+    var YesNoOptions = ViewBag.options;
+    var maritalStatus = ViewBag.maritalStatus;
+    var gender = ViewBag.gender;
+}
+<div class="br-pageheader">
+    <nav class="breadcrumb pd-0 mg-0 tx-12">
+        @Html.ActionLink("Dashboard", "Index", "Home", null, new { @class = "breadcrumb-item" })
+        <span class="breadcrumb-item active">Create Member</span>
+    </nav>
+</div>
+<div class="br-pagetitle">
+    <i class="icon icon ion-ios-bookmarks-outline"></i>
+    <div>
+        <h4>Create Member</h4>
+        <p class="mg-b-0">Create a new Member</p>
+    </div>
+</div>
+
+<div class="br-pagebody">
+    <div class="br-section-wrapper">
+        <div class="form-layout form-layout-1" id="app">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @*@Html.HiddenFor(model => model.Member.Id)*@
+
+            <div class="row mg-b-25">
+                <div class="col-lg-4">
+                    <div class="form-group">
+
+                        @Html.LabelFor(model => model.Member.TitleID, htmlAttributes: new { @class = "control-label" })
+
+                        @*@Html.DropDownListFor(model => model.Member.TitleID, new SelectList(Model.Titles, "id", "Name"), "Select Title", new { @class = "form-control" })*@
+                        <select class="form-control" v-model="title" name="title">
+                            <option value="null" disabled selected>Select title</option>
+                            @foreach (var title in Model.Titles)
+                            {
+                                <option value="@title.Id">@title.Name</option>
+                            }
+                        </select>
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Member.FirstName, htmlAttributes: new { @class = "control-label" })
+                        <input type="text" name="firstname" value="" v-model="firstname" class="form-control" />
+                        @*@Html.EditorFor(model => model.Member.FirstName, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @*@Html.ValidationMessageFor(model => model.Member.FirstName, "", new { @class = "text-danger" })*@
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Member.LastName, htmlAttributes: new { @class = "control-label" })
+                        <input type="text" name="lastname" value="" v-model="lastname" class="form-control" />
+                        @*@Html.EditorFor(model => model.Member.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Member.LastName, "", new { @class = "text-danger" })*@
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Member.MiddleName, htmlAttributes: new { @class = "control-label" })
+                        <input type="text" name="middlename" value="" v-model="middlename" class="form-control" />
+                        @*@Html.EditorFor(model => model.Member.MiddleName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Member.MiddleName, "", new { @class = "text-danger" })*@
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Member.Gender, htmlAttributes: new { @class = "control-label" })
+
+                        @*@Html.DropDownListFor(model => model.Member.Gender, new SelectList(gender, "Value", "Text"), "Select option", new { @class = "form-control" })*@
+                        @Html.ValidationMessageFor(model => model.Member.Gender, "", new { @class = "text-danger" })
+                        <select class="form-control" name="gender" v-model="gender">
+                            <option value="null" disabled selected>Select gender</option>
+                            @foreach (var item in gender)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Member.Status, htmlAttributes: new { @class = "control-label" })
+
+                        @*@Html.DropDownListFor(model => model.Member.Status, new SelectList(maritalStatus, "Value", "Text"), "Select option", new { @class = "form-control" })*@
+                        @Html.ValidationMessageFor(model => model.Member.Status, "", new { @class = "text-danger" })
+                        <select class="form-control" name="marital_status" v-model="marital_status">
+                            <option value="null" disabled selected>Select Status</option>
+                            @foreach (var item in maritalStatus)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Member.Dob, htmlAttributes: new { @class = "control-label" })
+                        <input type="text" name="dob" id="dob" value="" v-model="dob" class="form-control" />
+                        @*@Html.EditorFor(model => model.Member.Dob, new { htmlAttributes = new { @class = "form-control", @id = "dob" } })
+                @Html.ValidationMessageFor(model => model.Member.Dob, "", new { @class = "text-danger" })*@
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Member.Dom, htmlAttributes: new { @class = "control-label" })
+                        <input type="text" name="dom" id="dom" value="" v-model="dom" class="form-control" />
+                        @*@Html.EditorFor(model => model.Member.Dom, new { htmlAttributes = new { @class = "form-control", @id = "dom" } })
+                @Html.ValidationMessageFor(model => model.Member.Dom, "", new { @class = "text-danger" })*@
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Member.Phone, htmlAttributes: new { @class = "control-label" })
+                        <input type="text" name="phone" value="" v-model="phone" class="form-control" />
+                        @*@Html.EditorFor(model => model.Member.Phone, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Member.Phone, "", new { @class = "text-danger" })*@
+
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Member.Address, htmlAttributes: new { @class = "control-label" })
+                        <textarea v-model="address" class="form-control" name="address"></textarea>
+                        @*@Html.EditorFor(model => model.Member.Address, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Member.Address, "", new { @class = "text-danger" })*@
+
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Member.Phone2, htmlAttributes: new { @class = "control-label" })
+                        <input type="text" name="phone2" value="" v-model="phone2" class="form-control" />
+                        @*@Html.EditorFor(model => model.Member.Phone2, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Member.Phone2, "", new { @class = "text-danger" })*@
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Member.Email, htmlAttributes: new { @class = "control-label" })
+                        <input type="email" name="email" value="" v-model="email" class="form-control" />
+                        @*@Html.EditorFor(model => model.Member.Email, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Member.Email, "", new { @class = "text-danger" })*@
+
+                    </div>
+                </div>
+
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Member.BornAgain, htmlAttributes: new { @class = "control-label" })
+
+                        @*@Html.DropDownListFor(model => model.Member.BornAgain, new SelectList(YesNoOptions, "Value", "Text"), "Select option", new { @class = "form-control" })*@
+                        <select class="form-control" name="born_again"  v-model="born_again">
+                            <option value="null" disabled selected>Select Option</option>
+                            @foreach (var item in YesNoOptions)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                        @* @Html.ValidationMessageFor(model => model.Member.BornAgain, "", new { @class = "text-danger" })*@
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Member.Baptized, htmlAttributes: new { @class = "control-label" })
+
+                        @*@Html.DropDownListFor(model => model.Member.Baptized, new SelectList(YesNoOptions, "Value", "Text"), "Select option", new { @class = "form-control" })*@
+                        <select class="form-control" name="baptized" v-model="baptized">
+                            <option value="null" disabled selected>Select option</option>
+                            @foreach (var item in YesNoOptions)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                        @* @Html.ValidationMessageFor(model => model.Member.Baptized, "", new { @class = "text-danger" })*@
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Member.FoundationSchool, htmlAttributes: new { @class = "control-label" })
+
+                        @*@Html.DropDownListFor(model => model.Member.FoundationSchool, new SelectList(YesNoOptions, "Value", "Text"), "Select option", new { @class = "form-control" })*@
+                        <select class="form-control" name="foundation_school" v-model="foundation_school">
+                            <option value="null" disabled selected>Select option</option>
+                            @foreach (var item in YesNoOptions)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                        @*@Html.ValidationMessageFor(model => model.Member.FoundationSchool, "", new { @class = "text-danger" })*@
+
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="form-group">
+
+                        @*@Html.LabelFor(model => model.Member.DesignationId, htmlAttributes: new { @class = "control-label" })*@
+                        <label>Designation</label>
+                        @*@Html.DropDownListFor(model => model.Member.Designation, new SelectList(Model.Designations, "id", "Name"), "Select Designation", new { @class = "form-control" })*@
+                        <select class="form-control" name="designation" v-model="designation">
+                            <option value="null" selected="selected">Select option</option>
+                            @foreach (var item in Model.Designations)
+                            {
+                                <option value="@item.Id">@item.Name</option>
+                            }
+                        </select>
+                        @*@Html.ValidationMessageFor(model => model.Member.Designation, "", new { @class = "text-danger" })*@
+
+                    </div>
+                </div>
+
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <button  type="button" class="btn btn-primary" v-on:click="register" v-bind:disabled="busy"><span v-show="busy">Busy...</span><span v-show="!busy">Save</span></button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+                }
+
+            </div>
+    </div>
+</div>
+@section scripts {
+<script src="~/Scripts/vue.js"></script>
+<script src="~/Scripts/axios.min.js"></script>
+    <script>
+        var dob = '';
+        var dom = '';
+        $(document).ready(function () {
+            $("#dob").datepicker({
+                onSelect : function(date) {
+                    dob = date
+                }
+            })
+            $("#dom").datepicker({
+                onSelect: function (date) {
+                    dom = date
+                }
+            });
+        })
+
+
+        var server = axios.create({
+            timeout: 1000,
+            headers: { 'X-Custom-Header': 'foobar' }
+        });
+
+        //Registration form
+        new Vue({
+            el: '#app',
+            data: {
+                firstname: '',
+                lastname: '',
+                middlename: '',
+                title: '',
+                gender: '',
+                designation: '',
+                baptized: '',
+                born_again: '',
+                address: '',
+                phone: '',
+                phone2: '',
+                dob: '',
+                dom: '',
+                email: '',
+                busy: false,
+                foundation_school: '',
+                marital_status: ''
+            },
+            methods: {
+                register: function () {
+                    this.busy = true;
+                    self = this;
+                    axios({
+                        method: 'post',
+                        url: '/api/members',
+                        data: {
+                            FirstName: this.firstname,
+                            LastName: this.lastname,
+                            MiddleName: this.middlename,
+                            Email: this.email,
+                            FoundationSchool: this.foundation_school,
+                            Baptized: this.baptized,
+                            BornAgain: this.born_again,
+                            DesignationId: this.designation,
+                            Dob: dob,
+                            Dom: dom,
+                            Phone: this.phone,
+                            Phone2: this.phone2,
+                            Status: this.marital_status,
+                            TitleID: this.title,
+                            Gender: this.gender,
+                            Address: this.address,
+                        }
+                    })
+                        .then(function (response) {
+                            self.busy = false;
+                            toastr.success('Member created', response.Message)
+                        })
+                        .catch(function (error) {
+                            self.busy = false;
+                            toastr.error('Please complete the form', 'Validation Error')
+                        });
+                    
+                }
+            }
+        })
+    </script>
+}

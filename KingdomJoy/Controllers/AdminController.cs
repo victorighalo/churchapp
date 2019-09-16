@@ -72,8 +72,184 @@ namespace KingdomJoy.Controllers
             await Users.GetUsers();
 
             return View(Users);
-        }        
-        
+        }
+
+        // GET: Admin/MemberDesignations
+        [HttpGet]
+        public async Task<ActionResult> MemberDesignations()
+        {
+            IEnumerable<Designation> designations = await db.Designations.ToListAsync();
+            var viewModel = new DesignationViewModel()
+            {
+                Designations = designations
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        public ActionResult CreateMemberDesignation()
+        {
+            ViewBag.status = "";
+            return View();
+        }
+
+        // POST: /Admin/CreateMemberDesignation
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> CreateMemberDesignation(Designation model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (model.Name != null)
+                    {
+                        var designation = new Designation
+                        {
+                            Name = model.Name,
+                        };
+
+                        db.Designations.Add(designation);
+                        await db.SaveChangesAsync();
+                        return RedirectToAction("MemberDesignations");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Name","Designation name cannot be empty");
+                        return View("CreateMemberDesignation");
+                    }
+                }
+                catch (Exception e)
+                {
+                    ModelState.AddModelError("Name",e.Message);
+                    return View("CreateMemberDesignation");
+                }
+            }
+
+            return View("CreateMemberDesignation");
+        }
+
+        // GET: Admin/MemberTitles
+        public async Task<ActionResult> MemberTitles()
+        {
+            IEnumerable<MemberTitle> Titles = await db.MemberTitles.ToListAsync();
+            var viewModel = new NewTitleViewModel()
+            {
+                MemberTitles = Titles
+            };
+
+            return View(viewModel);
+        }
+
+        // POST: /Account/MemberTitles
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> MemberTitles(NewTitleViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    if (model.MemberTitle.Name != null)
+                    {
+                        var Title = new MemberTitle
+                        {
+                            Name = model.MemberTitle.Name,
+                        };
+
+                        db.MemberTitles.Add(Title);
+                        await db.SaveChangesAsync();
+
+                        ViewBag.status = true;
+                        ViewBag.message = "Created Title";
+                        IEnumerable<MemberTitle> Titles = await db.MemberTitles.ToListAsync();
+                        var viewModel = new NewTitleViewModel()
+                        {
+                            MemberTitles = Titles
+                        };
+                        return View(viewModel);
+                    }
+                    else
+                    {
+                        ViewBag.status = false;
+                        ViewBag.message = "Failed to create Title. Name empty.";
+                        IEnumerable<MemberTitle> Titles = await db.MemberTitles.ToListAsync();
+                        var viewModel = new NewTitleViewModel()
+                        {
+                            MemberTitles = Titles
+                        };
+                        return View(viewModel);
+                    }
+                }
+                catch (Exception e)
+                {
+            
+                    IEnumerable<MemberTitle> Titles = await db.MemberTitles.ToListAsync();
+                    var viewModel = new NewTitleViewModel()
+                    {
+                        MemberTitles = Titles
+                    };
+                    ViewBag.status = false;
+                    ViewBag.message = e.Message;
+                    return View(viewModel);
+                }
+            }
+            return View(model);
+        }
+
+        //// GET: Admin/DeleteTitle/5
+        public async Task<ActionResult> DeleteTitle(int id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            MemberTitle Title = await db.MemberTitles.FindAsync(id);
+            db.MemberTitles.Remove(Title);
+            await db.SaveChangesAsync();
+            return RedirectToAction("MemberTitles");
+        }
+
+        // GET: Admin/EditTitle/5
+        public async Task<ActionResult> EditTitle(int id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            MemberTitle memberTitle = await db.MemberTitles.FindAsync(id);
+       
+            return View(memberTitle);
+        }
+
+        // POST: Admin/EditTitle/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> EditTitle([Bind(Include = "Id,Name")] MemberTitle data)
+        {
+
+            if (ModelState.IsValid)
+            {
+                MemberTitle memberTitle = await db.MemberTitles.FindAsync(data.Id);
+              
+                if (memberTitle != null)
+                {
+                    memberTitle.Name = data.Name;
+                    db.Entry(memberTitle).State = EntityState.Modified;
+                    await db.SaveChangesAsync();
+                    return RedirectToAction("MemberTitles");
+                }
+                return View(data);
+            }
+            return View(data);
+
+        }
+
+
         // GET: Admin/Users
         public async Task<ActionResult> CreateUser()
         {
@@ -263,6 +439,8 @@ namespace KingdomJoy.Controllers
             }
             return View(user);
         }
+
+
 
         //// POST: Admin/Delete/5
         [HttpPost, ActionName("Delete")]

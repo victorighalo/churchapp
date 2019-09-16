@@ -1,0 +1,188 @@
+﻿@model IEnumerable<KingdomJoy.Models.Member>
+
+@{
+    ViewBag.Title = "Members";
+}
+
+<div class="br-pageheader">
+    <nav class="breadcrumb pd-0 mg-0 tx-12">
+        <span class="breadcrumb-item active">Registered Members</span>
+    </nav>
+</div>
+
+<div class="br-pagebody" ng-app="app">
+    <div class="br-section-wrapper">
+        @Html.ActionLink("New Member", "create", "Members", null, new { @class = "btn btn-primary" })
+        <br />
+        <br />
+
+        @*<table class="table table-bordered table-primary">
+            <thead class="thead-colored thead-primary">
+                <tr>
+                    <th>First name</th>
+                    <th>Last name</th>
+                    <th>Email</th>
+
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+
+                            @item.FirstName
+                        </td>
+                        <td>
+                            @item.LastName
+                        </td>
+                        <td>
+                            @item.Email
+                        </td>
+
+                        <td>
+                            <div class="dropdown">
+                                <a href="" class="tx-gray-800 d-inline-block" data-toggle="dropdown">
+                                    Actions  <i class="fa fa-angle-down mg-l-10"></i>
+                                </a>
+                                <div class="dropdown-menu pd-10 wd-50">
+                                    <nav class="nav nav-style-1 flex-column">
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id, @class = "nav-link" })
+                                        <button id="app" ng-click="delete(@item.Id)" class="btn btn-link nav-link">Delete</button>
+                                    </nav>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+
+        @*</table>*@
+ 
+        <div class="table-wrapper table-responsive">
+            <table id="datatable1" class="table display responsive nowrap">
+                <thead>
+                    <tr>
+                        <th>Edit</th>
+                        <th>Id</th>
+                        <th>Title</th>
+                        <th>Designation</th>
+                        <th>Last Name</th>
+                        <th>First Name</th>
+                        <th>Mid Name</th>
+                        <th>Baptized</th>
+                        <th>F School</th>
+                        <th>BornAgain</th>
+                        <th>Phone</th>
+                        <th>Phone 2</th>
+                        <th>Email</th>
+                        <th>DOB</th>
+                        <th>DOM</th>
+                        <th>Gender</th>
+                        <th>Married</th>
+                        <th>Address</th>
+
+                    </tr>
+                </thead>
+
+            </table>
+        </div>
+    </div>
+</div>
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/Content/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="~/Content/responsive.dataTables.min.css">
+}
+
+@section scripts {
+    <script src="~/Scripts/datatables/jquery.dataTables.js"></script>
+    <script src="~/Scripts/sweetalert2@8.js"></script>
+    <script>
+        var rowId;
+        var table = $('.table').DataTable({
+            //"proccessing": true,
+            //"serverSide": true,
+            searching: true,
+            responsive: true,
+            //searchPlaceholder: 'Search...',
+            //lengthMenu: '_MENU_ items/page',
+            "ajax": {
+                url: "/api/members/dataTablesBasic",
+                type: 'POST',
+                dataSrc: ''
+            },
+            "language": {
+                "search": "",
+            },
+            "columns": [
+                { "data": "Edit" },
+                { "data": "Id" },
+                { "data": "Title" },
+                { "data": "Designation" },
+                { "data": "LastName" },
+                { "data": "FirstName" },
+                { "data": "MiddleName" },
+                { "data": "Baptized" },
+                { "data": "FoundationSchool" },
+                { "data": "BornAgain" },
+                { "data": "Phone" },
+                { "data": "Phone2" },
+                { "data": "Email" },
+                { "data": "Dob" },
+                { "data": "Dom" },
+                { "data": "Gender" },
+                { "data": "Status" },
+                { "data": "Address" },
+            ]
+            ,
+            drawCallback: function () {
+                //$('.dataTables_length select').select2();
+            }
+        });
+
+        $(".table tbody").on("click", ".delete", function () {
+            rowId = $(this).data('id')
+            
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+           
+                if (result.value) {
+                    $.ajax(
+                        {
+                            url: "/api/members/" + rowId,
+                            type: 'DELETE',
+                        })
+                        .then(function (res) {
+                            table.ajax.reload();
+                            Swal.fire(
+                                'Deleted!',
+                                'Member has been deleted.',
+                                'success'
+                            )
+                        })
+                        .catch(function (res) {
+                            table.ajax.reload();
+                            Swal.fire(
+                                'Failed!',
+                                'Failed to delete Member.',
+                                'error'
+                            )
+                        })
+                    
+                }
+            })
+        })
+    </script>
+}
